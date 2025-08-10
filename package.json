@@ -1,19 +1,15 @@
 {
-  "name": "vite-typescript-starter",
+  "name": "graphql-visualizer",
+  "version": "0.1.0",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "dev": "caido-dev",
+    "build": "caido-dev build",
+    "release": "caido-dev release"
   },
   "devDependencies": {
-    "typescript": "^5.5.3",
-    "vite": "^5.4.2"
-  },
-  "dependencies": {
-    "d3": "^7.9.0",
-    "graphql": "^16.11.0"
+    "@caido/sdk": "^0.25.0",
+    "@caido-community/dev": "^0.1.6",
+    "typescript": "^5.0.0"
   }
 }

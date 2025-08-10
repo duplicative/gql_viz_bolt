@@ -2,9 +2,9 @@ export interface GraphQLNode {
   id: string;
   name: string;
   type: 'query' | 'mutation' | 'subscription' | 'field' | 'fragment';
-  arguments?: string;
   children: GraphQLNode[];
   parent?: GraphQLNode;
+  arguments?: string;
   x?: number;
   y?: number;
 }
