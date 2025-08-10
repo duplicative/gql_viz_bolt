@@ -1,8 +1,9 @@
 import { parseGraphQLQuery, generateQueryFromNodes } from './graphql-parser';
 import { GraphQLVisualizer } from './visualizer';
 import type { GraphQLNode } from './types';
+import type { Caido } from "@caido/sdk-frontend";
 
-export class GraphQLQueryVisualizerApp {
+export class GraphQLVisualizerApp {
   private visualizer: GraphQLVisualizer;
   private currentNodes: GraphQLNode[] = [];
   private debounceTimer: number | null = null;
@@ -25,7 +26,7 @@ export class GraphQLQueryVisualizerApp {
   private rightPanel: HTMLElement;
   private divider: HTMLElement;
 
-  constructor() {
+  constructor(private sdk: Caido) {
     this.initializeElements();
     this.initializeVisualizer();
     this.setupEventListeners();
@@ -54,8 +55,8 @@ export class GraphQLQueryVisualizerApp {
 
   private initializeVisualizer(): void {
     this.visualizer = new GraphQLVisualizer('visualization', {
-      width: 800,
-      height: 600,
+      width: this.rightPanel.offsetWidth,
+      height: this.rightPanel.offsetHeight,
       nodeRadius: 25,
       levelHeight: 80
     }, {
@@ -309,6 +310,11 @@ export class GraphQLQueryVisualizerApp {
       const rect = container.getBoundingClientRect();
       this.visualizer.resize(rect.width, rect.height);
     }
+  }
+
+  public setQuery(query: string) {
+    this.queryInput.value = query;
+    this.visualizeQuery();
   }
 
   private loadSampleQuery(): void {

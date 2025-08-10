@@ -1,0 +1,20 @@
+{
+  "name": "graphql-visualizer-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@caido/sdk-frontend": "^0.25.0",
+    "graphql": "^16.8.1",
+    "d3": "^7.8.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "vite": "^4.0.0",
+    "@types/d3": "^7.4.3"
+  }
+}
