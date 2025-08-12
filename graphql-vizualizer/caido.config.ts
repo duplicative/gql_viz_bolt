@@ -38,7 +38,9 @@ export default defineConfig({
               "@codemirror/language", 
               "@lezer/common", 
               "@lezer/highlight", 
-              "@lezer/lr"
+              "@lezer/lr",
+              "graphql",
+              "d3"
             ]
           }
         },
