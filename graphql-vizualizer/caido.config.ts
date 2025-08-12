@@ -7,12 +7,12 @@ import tailwindCaido from "@caido/tailwindcss";
 import path from "path";
 import prefixwrap from "postcss-prefixwrap";
 
-const id = "frontend-vue";
+const id = "graphql-visualizer";
 export default defineConfig({
   id,
-  name: "Frontend Vue",
-  description: "Plugin template with frontend using VueJS",
-  version: "0.0.0",
+  name: "GraphQL Visualizer",
+  description: "Visualize and edit your GraphQL queries with an interactive tree diagram",
+  version: "0.1.0",
   author: {
     name: "Caido Labs Inc.",
     email: "dev@caido.io",
@@ -20,17 +20,9 @@ export default defineConfig({
   },
   plugins: [
     {
-      kind: "backend",
-      id: "backend",
-      root: "packages/backend",
-    },
-    {
       kind: 'frontend',
       id: "frontend",
       root: 'packages/frontend',
-      backend: {
-        id: "backend",
-      },
       vite: {
         plugins: [vue()],
         build: {

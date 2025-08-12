@@ -6,6 +6,7 @@ import { SDKPlugin } from "./plugins/sdk";
 import "./styles/index.css";
 import type { FrontendSDK } from "./types";
 import App from "./views/App.vue";
+import { GraphQLVisualizerApp } from "./app";
 
 // This is the entry point for the frontend plugin
 export const init = (sdk: FrontendSDK) => {
@@ -35,12 +36,49 @@ export const init = (sdk: FrontendSDK) => {
   // Mount the app to the root element
   app.mount(root);
 
-  // Add the page to the navigation
-  // Make sure to use a unique name for the page
-  sdk.navigation.addPage("/my-plugin", {
+  const card = sdk.ui.card({
     body: root,
   });
 
-  // Add a sidebar item
-  sdk.sidebar.registerItem("My Plugin", "/my-plugin");
+  sdk.navigation.addPage("/graphql-visualizer", {
+    body: card,
+  });
+
+  sdk.sidebar.registerItem("GraphQL Visualizer", "/graphql-visualizer", {
+    icon: "fas fa-sitemap",
+  });
+
+  sdk.commands.register("graphql-visualizer.visualize", {
+    name: "Visualize GraphQL Query",
+    run: (context) => {
+      if (context.type === "RequestRowContext" && context.requests.length > 0) {
+        const request = context.requests[0];
+
+        // This is a bit of a hack, as the SDK doesn't directly expose the request body yet.
+        // We assume the raw property contains the full request, and we can parse the body from it.
+        const rawRequest = (request as any).raw as string;
+        const bodyMatch = rawRequest.match(/(\r\n\r\n|\n\n)(.*)/s);
+        if (bodyMatch && bodyMatch[2]) {
+            const body = bodyMatch[2];
+            sdk.navigation.goTo("/graphql-visualizer");
+
+            setTimeout(() => {
+                const appInstance = new GraphQLVisualizerApp(sdk);
+                appInstance.setQuery(body);
+            }, 100);
+        } else {
+            sdk.window.showToast("No body found in the selected request.", { variant: "warning" });
+        }
+
+      } else {
+        sdk.window.showToast("Please select a request to visualize.", { variant: "info" });
+      }
+    },
+  });
+
+  sdk.menu.registerItem({
+    type: "RequestRow",
+    commandId: "graphql-visualizer.visualize",
+    leadingIcon: "fas fa-sitemap",
+  });
 };
