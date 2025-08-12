@@ -38,9 +38,7 @@ export default defineConfig({
               "@codemirror/language", 
               "@lezer/common", 
               "@lezer/highlight", 
-              "@lezer/lr",
-              "graphql",
-              "d3"
+              "@lezer/lr"
             ]
           }
         },
@@ -51,6 +49,9 @@ export default defineConfig({
               replacement: path.resolve(__dirname, "packages/frontend/src"),
             },
           ],
+        },
+        ssr: {
+          noExternal: ["graphql", "d3"],
         },
         css: {
           postcss: {
